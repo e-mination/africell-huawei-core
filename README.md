@@ -110,23 +110,11 @@ IN platform layout: client-side core switches, active and standby nodes, and the
 
 ![Alepo IN network design](assets/alepo-ip-design.png)
 
-### Operations toolkit
-
-LMT-style clients for MSC, MGW, and UGW/DNS, IN utilities, Office, and remote access used to reach the nodes.
-
-![Operations desktop with core clients](assets/operations-toolkit.png)
-
 ### u2000 user-defined counters
 
 Trunk utilization, handover, IN bypass, and packet-loss formulas, saved as user-defined counters rather than one-off queries.
 
 ![u2000 user-defined counter manager](assets/u2000-counter-manager.png)
-
-### Trunk office traffic
-
-Those extracts landed in Excel. This pivot is trunk-office call attempts — the reporting half of the same interconnect and MSC work.
-
-![Excel pivot of trunk office call attempts](assets/trunk-office-traffic.png)
 
 ## Skills
 
