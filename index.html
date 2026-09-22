@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Elie Minassian · Core Network Engineer · Africell</title>
+  <meta name="description" content="Elie Minassian, core network engineer at Africell across Uganda, the DRC, and Sierra Leone. Huawei MSC, MGW, HLR/HSS, SMSC, SGSN, GGSN/UGW, Alepo IN, roaming, M3UA, and u2000.">
+  <meta name="author" content="Elie Minassian">
+  <meta name="theme-color" content="#14211e">
+  <link rel="canonical" href="https://e-mination.github.io/africell-huawei-core/">
+  <meta property="og:title" content="Elie Minassian · Africell Huawei Core">
+  <meta property="og:description" content="Core network engineering for Africell in Uganda, the DRC, and Sierra Leone. Personal record of Huawei MSC, packet core, IN, roaming, and u2000 work.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://e-mination.github.io/africell-huawei-core/">
+  <meta property="og:image" content="https://e-mination.github.io/africell-huawei-core/assets/mgw-codec-capability.png">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <script>
+    (function () {
+      try {
+        var query = new URLSearchParams(location.search).get("theme");
+        var stored = localStorage.getItem("core-theme");
+        var theme = query === "light" || query === "dark" ? query : stored;
+        if (theme !== "light" && theme !== "dark") {
+          theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        }
+        document.documentElement.setAttribute("data-theme", theme);
+      } catch (err) {
+        document.documentElement.setAttribute("data-theme", "light");
+      }
+    })();
+  </script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Elie Minassian",
+    "jobTitle": "Core Network Engineer",
+    "email": "mailto:minassianelie@gmail.com",
+    "url": "https://e-mination.github.io/africell-huawei-core/",
+    "sameAs": [
+      "https://github.com/e-mination",
+      "https://github.com/e-mination/paris-olympics-2024-roaming-volte",
+      "https://github.com/e-mination/lechiffre-trading"
+    ],
+    "worksFor": {
+      "@type": "Organization",
+      "name": "Africell"
+    }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+  <div class="notice" role="note">
+    <div class="wrap">
+      <strong>Personal record of real core-network work at Africell.</strong>
+      Credentials, subscriber dumps, and live MML with secrets are left out. This is not an official Africell publication.
+    </div>
+  </div>
+
+  <header class="site-header">
+    <div class="wrap bar">
+      <a class="brand" href="#top">Elie Minassian</a>
+      <nav aria-label="Page">
+        <a href="#countries">Countries</a>
+        <a href="#domains">Domains</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </nav>
+      <button id="theme-toggle" type="button" aria-pressed="false">
+        <span class="when-light">Dark mode</span>
+        <span class="when-dark">Light mode</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="wrap">
+    <main id="content">
+    <header class="hero" id="top">
+      <div class="hero-grid">
+        <div>
+          <p class="kicker">Africell · Huawei mobile core</p>
+          <h1>Elie Minassian</h1>
+          <p class="role">Core network engineer across Uganda, the Democratic Republic of Congo, and Sierra Leone.</p>
+          <p class="intro">I work the circuit core, the packet core, and the services hung off them: MSC and MGW, HLR/HSS, SMSC, SGSN and GGSN/UGW, Alepo IN, roaming, M3UA signaling, and u2000. The pages below are taken from that working record — consoles, designs, and the change list — not from a lab exercise.</p>
+        </div>
+        <dl class="rack" aria-label="Core stack">
+          <div><dt>MSC server</dt><dd>Huawei MSOFTX3000</dd></div>
+          <div><dt>Media gateway</dt><dd>UMG / MGW</dd></div>
+          <div><dt>Packet core</dt><dd>USN (SGSN), UGW (GGSN)</dd></div>
+          <div><dt>Subscriber</dt><dd>HLR / HSS</dd></div>
+          <div><dt>Messaging</dt><dd>SMSC, USSD, A2P</dd></div>
+          <div><dt>IN</dt><dd>Alepo</dd></div>
+          <div><dt>Assurance</dt><dd>u2000</dd></div>
+        </dl>
+      </div>
+    </header>
+
+      <section id="countries" aria-labelledby="countries-heading">
+        <div class="section-head">
+          <p class="kicker">Three markets</p>
+          <h2 id="countries-heading">Same core job, three countries</h2>
+          <p>Uganda holds the long work-order and roaming record. DRC is procedures, IN, and packet-core change. Sierra Leone is APN, UGW cleanup, messaging, and the transmission that lands on the core.</p>
+        </div>
+        <div class="countries">
+          <article class="country">
+            <p class="code">UG · Uganda</p>
+            <h3>Uganda</h3>
+            <p>The deepest file is here: a numbered work-order series on the MSC, MGW, USN, UGW, HSS, and u2000, plus roaming tests and weekly KPI packs.</p>
+            <ul>
+              <li>MSC and MGW licenses, MSOFTX3000 patches, codec and board work, and BSC/RNC migration onto a new MSS.</li>
+              <li>SCCP migration and national plus international trunk moves, including SIP toward Sierra Leone.</li>
+              <li>USN and UGW upgrades, APN autocorrect, GCDR changes, NTP, BFD, and the cutover to new Infoblox DNS servers.</li>
+              <li>HSS license and OMU sync work, and LTE operator-determined barring for outbound roaming.</li>
+              <li>Inbound and outbound roaming tests with IR.21 sets across partner networks.</li>
+              <li>u2000 extracts for voice, packet core, HLR, VPD, interconnect, and call setup.</li>
+            </ul>
+          </article>
+          <article class="country">
+            <p class="code">CD · DRC</p>
+            <h3>DR Congo</h3>
+            <p>Procedures and node work on the Huawei core and Alepo IN, including a packet-core DPI move and MSC data-fill growth.</p>
+            <ul>
+              <li>Huawei MML and Alepo command procedures used on the live nodes.</li>
+              <li>CUG data-unit recharge flows on the IN.</li>
+              <li>UGW DPI shift for Katanga.</li>
+              <li>MSC CNACLR table growth and license updates on the nodes.</li>
+              <li>Design notes, cell creation support, and the spare-parts and work-order trail beside the core.</li>
+            </ul>
+          </article>
+          <article class="country">
+            <p class="code">SL · Sierra Leone</p>
+            <h3>Sierra Leone</h3>
+            <p>APN build, gateway cleanup, messaging interconnect, and the E1/STM edge that the core depends on.</p>
+            <ul>
+              <li>3G and 4G APN creation, including designs that bypass Alepo.</li>
+              <li>PDP session deactivation and UGW cleanup.</li>
+              <li>Fraud-number blocking, and USSD short-code creation.</li>
+              <li>E1, TDM, and new STM fiber where transmission meets the core.</li>
+              <li>International SIP trunks and PCCW A2P.</li>
+              <li>HSS SPID work and a QCI change from 7 to 8.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="domains" aria-labelledby="domains-heading">
+        <div class="section-head">
+          <p class="kicker">What I run</p>
+          <h2 id="domains-heading">Core domains</h2>
+          <p>These are the systems in the daily record. The same names show up in the work orders, the procedure folders, and the screenshots.</p>
+        </div>
+        <div class="domains">
+          <article class="domain">
+            <p class="idx">01</p>
+            <h3>MSC</h3>
+            <p>Circuit-switched call control on Huawei MSOFTX3000. Batch MML, office directions, call-setup investigation, patches, licenses, and MSS rehomes.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">02</p>
+            <h3>MGW</h3>
+            <p>Media gateway beside the MSC. Codec sets and channel counts, VPU and board recovery, announcement tones, and H.248 toward the server.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">03</p>
+            <h3>M3UA</h3>
+            <p>SIGTRAN between the MSC and EIR, IN, and VAS. Link faults, unavailable routes, and paused SCCP subsystems, worked from u2000 alarms.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">04</p>
+            <h3>HLR / HSS</h3>
+            <p>Subscriber and APN procedures, SPID, license loads, OMU file-sync alarms, and LTE barring for outbound roamers.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">05</p>
+            <h3>SMSC</h3>
+            <p>SMS MO/MT toward interconnect partners, A2P (including PCCW in Sierra Leone), and number-level messaging faults on the core.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">06</p>
+            <h3>SGSN</h3>
+            <p>Huawei USN. Software and license windows, probe configuration, BFD session binding, subcards and disks, NTP, and detach of inactive users.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">07</p>
+            <h3>GGSN / UGW</h3>
+            <p>Gateway upgrades and licenses, PDP context cleanup, DPI relocation, APN autocorrect, and GCDR version changes.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">08</p>
+            <h3>APN</h3>
+            <p>Private and public APN design for 3G and 4G, including profiles applied with Alepo bypassed, checked on HLR and packet core together.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">09</p>
+            <h3>IN / Alepo</h3>
+            <p>Alepo procedures, CUG data recharge, bypass designs, and CAMEL destination numbers written into MSC CDRs.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">10</p>
+            <h3>Roaming</h3>
+            <p>Inbound and outbound partner tests, IR.21 document sets, roaming configuration, and LTE controls on the home core.</p>
+          </article>
+          <article class="domain">
+            <p class="idx">11</p>
+            <h3>u2000</h3>
+            <p>Alarm browsing, user-defined counters, PS-node migration onto the NMS, and the KPI workbooks the core team actually uses.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="gallery" aria-labelledby="gallery-heading">
+        <div class="section-head">
+          <p class="kicker">From the consoles</p>
+          <h2 id="gallery-heading">Screenshot gallery</h2>
+          <p>Real sessions from the Africell core desk. A called prefix on the MSC batch line is masked. No passwords were readable in this set. Open any shot for the full frame.</p>
+        </div>
+        <div class="gallery">
+          <figure>
+            <a class="shot" href="assets/msc-batch-script.png">
+              <img src="assets/msc-batch-script.png" width="1918" height="1080" alt="Huawei MSOFTX3000 MML batch window on the MSC server, with a called prefix masked" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">MSOFTX3000</span>
+              <strong>MSC batch script</strong>
+              <p>Immediate batch on the MSC server. The script in view checks M3UA links and the codec type on the MGW. The called prefix in that command is masked.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/m3ua-eir-link-fault.png">
+              <img src="assets/m3ua-eir-link-fault.png" width="1366" height="758" alt="u2000 current alarms listing M3UA link faults on an MSC" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">u2000 · signaling</span>
+              <strong>M3UA fault toward EIR, IN, and VAS</strong>
+              <p>Current alarms while M3UA between the MSC and EIR, IN, and VAS was down: link fault, route unavailable, SCCP subsystem paused, destination entity inaccessible.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/call-setup-offices.png">
+              <img src="assets/call-setup-offices.png" width="1231" height="665" alt="u2000 performance query selecting outgoing trunk office directions" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">MSC performance</span>
+              <strong>Call setup — office directions</strong>
+              <p>Object pick for an increased call-setup investigation. The filter is outgoing trunk office directions: national and international routes on the MSC.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/call-setup-counters.png">
+              <img src="assets/call-setup-counters.png" width="1249" height="674" alt="u2000 counter list including average call setup time and MGW fault failures" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">MSC performance</span>
+              <strong>Call setup — counters</strong>
+              <p>The counter side of the same query: average call setup time, answer times, seizure traffic, completion rate, circuits-busy failures, and failures due to MGW fault.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/mgw-codec-capability.png">
+              <img src="assets/mgw-codec-capability.png" width="1920" height="1080" alt="Huawei UMG MML output of LST CODECCAP showing codec sets and channel counts" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">UMG / MGW</span>
+              <strong>Codec capability</strong>
+              <p><code>LST CODECCAP</code> on the media gateway: VPU codec sets, configured and available channels, narrowband support, and tone-file type.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/alepo-ip-design.png">
+              <img src="assets/alepo-ip-design.png" width="857" height="622" alt="Alepo IN network design with core switches and active and standby nodes" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">Alepo IN</span>
+              <strong>IP design</strong>
+              <p>Alepo platform layout used for IN work: client-side core switches, active and standby nodes, and the addressing around them. No credentials are on the drawing.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/operations-toolkit.png">
+              <img src="assets/operations-toolkit.png" width="1370" height="770" alt="Operations desktop with MSC, MGW, and UGW clients plus IN utilities" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">Core desk</span>
+              <strong>Toolkit</strong>
+              <p>The working desktop: LMT-style clients for MSC, MGW, and UGW/DNS, IN utilities, Office, and remote access used to reach the nodes.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/u2000-counter-manager.png">
+              <img src="assets/u2000-counter-manager.png" width="1366" height="768" alt="u2000 user-defined counter manager with trunk, handover, and packet counters" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">u2000</span>
+              <strong>User-defined counters</strong>
+              <p>Counter manager behind the KPI packs: trunk utilization, handover, IN bypass, and packet-loss formulas, saved as user-defined counters rather than one-off queries.</p>
+            </figcaption>
+          </figure>
+          <figure>
+            <a class="shot" href="assets/trunk-office-traffic.png">
+              <img src="assets/trunk-office-traffic.png" width="1600" height="768" alt="Excel pivot of trunk office direction call attempts" loading="lazy">
+            </a>
+            <figcaption>
+              <span class="kicker">KPI workbook</span>
+              <strong>Trunk office traffic</strong>
+              <p>Those extracts landed in Excel. This pivot is trunk-office call attempts — the reporting half of the same interconnect and MSC work.</p>
+            </figcaption>
+          </figure>
+        </div>
+      </section>
+
+      <section id="skills" aria-labelledby="skills-heading">
+        <div class="section-head">
+          <p class="kicker">Production scope</p>
+          <h2 id="skills-heading">Skills</h2>
+          <p>What I use on a live Huawei core, grouped the way the work actually splits.</p>
+        </div>
+        <div class="skill-grid">
+          <article>
+            <h3>Signaling and media</h3>
+            <ul>
+              <li>M3UA, SCCP, and SIGTRAN</li>
+              <li>BICC, SIP trunks, and H.248</li>
+              <li>E1 / TDM and STM fiber into the core</li>
+              <li>Point codes, linksets, and office directions</li>
+              <li>MGW codec sets and bearer faults</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Circuit and subscriber core</h3>
+            <ul>
+              <li>Huawei MSOFTX3000 MSC server</li>
+              <li>UMG / MGW maintenance and recovery</li>
+              <li>HLR / HSS procedures, SPID, and licenses</li>
+              <li>SMSC, A2P interconnect, and USSD short codes</li>
+              <li>CLI, anonymous-call, and number-blocking controls</li>
+            </ul>
+          </article>
+          <article>
+            <h3>Packet core</h3>
+            <ul>
+              <li>USN (SGSN) and UGW (GGSN)</li>
+              <li>APN design for 3G and 4G</li>
+              <li>PDP context cleanup and QCI</li>
+              <li>DPI shift and GCDR / charging records</li>
+              <li>Infoblox DNS cutover on the core</li>
+            </ul>
+          </article>
+          <article>
+            <h3>IN, roaming, and assurance</h3>
+            <ul>
+              <li>Alepo IN procedures and CUG recharge</li>
+              <li>CAMEL destination number in MSC CDRs</li>
+              <li>Inbound and outbound roaming tests, IR.21</li>
+              <li>LTE ODB for outbound roaming</li>
+              <li>u2000 alarms, counters, and KPI workbooks</li>
+              <li>License windows, patches, and rollback-minded work orders</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact" aria-labelledby="contact-heading">
+        <div class="section-head">
+          <p class="kicker">Hire</p>
+          <h2 id="contact-heading">Contact</h2>
+          <p>I am open to telecom core roles — MSC, packet core, signaling, roaming, and IN — on Huawei and multi-vendor teams.</p>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <p class="kicker">Elie Minassian</p>
+            <h3>Core network engineer</h3>
+            <p>Africell · Uganda, DRC, and Sierra Leone. GitHub <a href="https://github.com/e-mination" rel="me">e-mination</a>.</p>
+            <ul class="contact-list">
+              <li>
+                <span>Email</span>
+                <a href="mailto:minassianelie@gmail.com">minassianelie@gmail.com</a>
+              </li>
+              <li>
+                <span>GitHub</span>
+                <a href="https://github.com/e-mination">github.com/e-mination</a>
+              </li>
+              <li>
+                <span>This record</span>
+                <a href="https://github.com/e-mination/africell-huawei-core">africell-huawei-core</a>
+              </li>
+            </ul>
+          </div>
+          <div class="elsewhere">
+            <p class="kicker">Also public</p>
+            <h3>Other work</h3>
+            <article>
+              <h4><a href="https://e-mination.github.io/paris-olympics-2024-roaming-volte/">Paris 2024 roaming and VoLTE</a></h4>
+              <p>Inbound and outbound roaming for the Paris Games at Bouygues Telecom: IR.21, VoLTE, and IR.25. Confidential fields omitted. <a href="https://github.com/e-mination/paris-olympics-2024-roaming-volte">Repository</a>.</p>
+            </article>
+            <article>
+              <h4><a href="https://lechiffre.online/">LeChiffre</a></h4>
+              <p>A separate project: Pine Script / TradingView work, with the site at lechiffre.online. <a href="https://github.com/e-mination/lechiffre-trading">Repository</a>.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Elie Minassian · Core network engineer at Africell. Personal portfolio, 2026.</p>
+      <p>Not an official Africell or Huawei publication. Subscriber data, credentials, and full live MML exports are not published here.</p>
+    </div>
+  </footer>
+
+  <dialog id="lightbox" aria-label="Screenshot">
+    <div class="lightbox-bar">
+      <button type="button" data-prev>Previous</button>
+      <button type="button" data-next>Next</button>
+      <button type="button" data-close>Close</button>
+    </div>
+    <img alt="">
+    <p class="lightbox-caption"></p>
+  </dialog>
+  <script src="js/site.js"></script>
+</body>
+</html>
