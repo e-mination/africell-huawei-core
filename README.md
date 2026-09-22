@@ -1,0 +1,3 @@
+# africell-huawei-core
+
+Scaffold.
